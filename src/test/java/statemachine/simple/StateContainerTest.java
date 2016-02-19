@@ -3,6 +3,7 @@ package statemachine.simple;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import statemachine.Transition;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -3,6 +3,7 @@ package statemachine.builder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import statemachine.Transition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class StateContainerTest {
         INITIAL, MIDDLE, END
     }
 
-    enum MyTransition implements statemachine.simple.Transition<MyState> {
+    enum MyTransition implements Transition<MyState> {
         INITIAL_TO_MIDDLE(from(MyState.INITIAL), to(MyState.MIDDLE)),
         ANY_TO_END(from(MyState.INITIAL, MyState.MIDDLE), to(MyState.END)),
         RESTART(from(MyState.END), to(MyState.INITIAL));

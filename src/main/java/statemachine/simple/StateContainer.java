@@ -1,5 +1,7 @@
 package statemachine.simple;
 
+import statemachine.Transition;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class StateContainer<S, T extends Transition<S>> {
