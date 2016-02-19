@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public final class StateContainer<S, T extends Transition<S>> {
+public final class StateContainer<S, T extends statemachine.simple.Transition<S>> {
     private final AtomicReference<S> state;
     private final Map<T, Runnable> transitionActions;
 
@@ -16,7 +16,7 @@ public final class StateContainer<S, T extends Transition<S>> {
     }
 
     @SuppressWarnings("UnusedParameters")
-    public static <S, T extends Transition<S>> StartingBuilder<S, T> over(final Class<S> states, final Class<T> transitions) {
+    public static <S, T extends statemachine.simple.Transition<S>> StartingBuilder<S, T> over(final Class<S> states, final Class<T> transitions) {
         return new StartingBuilder<>();
     }
 
@@ -35,13 +35,13 @@ public final class StateContainer<S, T extends Transition<S>> {
         }
     }
 
-    public  static class StartingBuilder<S, T extends Transition<S>> {
+    public  static class StartingBuilder<S, T extends statemachine.simple.Transition<S>> {
         public ContainerBuilder<S, T> startingAt(S initialState) {
             return new ContainerBuilder<>(initialState);
         }
     }
 
-    public static class ContainerBuilder<S, T extends Transition<S>> {
+    public static class ContainerBuilder<S, T extends statemachine.simple.Transition<S>> {
         private final Map<T, Runnable> onTransition = new HashMap<>();
         private final S initialState;
 

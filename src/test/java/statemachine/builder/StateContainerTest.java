@@ -20,7 +20,7 @@ public class StateContainerTest {
         INITIAL, MIDDLE, END
     }
 
-    enum MyTransition implements Transition<MyState> {
+    enum MyTransition implements statemachine.simple.Transition<MyState> {
         INITIAL_TO_MIDDLE(from(MyState.INITIAL), to(MyState.MIDDLE)),
         ANY_TO_END(from(MyState.INITIAL, MyState.MIDDLE), to(MyState.END)),
         RESTART(from(MyState.END), to(MyState.INITIAL));
