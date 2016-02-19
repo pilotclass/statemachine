@@ -3,11 +3,11 @@ package statemachine.builder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import statemachine.Transition;
+import statemachine.MyState;
+import statemachine.MyTransition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,37 +16,6 @@ public class StateContainerTest {
 
     private StateContainer<MyState, MyTransition> stateContainer;
     private List<MyState> states = new ArrayList<>();
-
-    enum MyState {
-        INITIAL, MIDDLE, END
-    }
-
-    enum MyTransition implements Transition<MyState> {
-        INITIAL_TO_MIDDLE(from(MyState.INITIAL), to(MyState.MIDDLE)),
-        ANY_TO_END(from(MyState.INITIAL, MyState.MIDDLE), to(MyState.END)),
-        RESTART(from(MyState.END), to(MyState.INITIAL));
-
-        private final EnumSet<MyState> source;
-        private final MyState target;
-
-        MyTransition(final EnumSet<MyState> source, final MyState target) {
-            this.target = target;
-            this.source = source;
-        }
-
-        private static EnumSet<MyState> from(final MyState... from) {
-            return EnumSet.copyOf(Arrays.asList(from));
-        }
-
-        private static MyState to(final MyState state) {
-            return state;
-        }
-
-        @Override
-        public MyState goFrom(final MyState currentState) {
-            return source.contains(currentState) ? target : currentState;
-        }
-    }
 
     @Before
     public void setUp() throws Exception {
@@ -61,7 +30,7 @@ public class StateContainerTest {
 
     private void onRestart() {
         states.add(MyState.INITIAL);
-        System.out.println("Back target the beginning!");
+        System.out.println("Back to the beginning!");
     }
 
     private void onMiddle() {
