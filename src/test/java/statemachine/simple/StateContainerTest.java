@@ -34,7 +34,7 @@ public class StateContainerTest {
         }
 
         @Override
-        public MyState from(final MyState myState) {
+        public MyState goFrom(final MyState myState) {
             return from.contains(myState) ? to : myState;
         }
     }

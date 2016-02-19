@@ -4,22 +4,22 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class StateContainer<S, T extends Transition<S>> {
     private final AtomicReference<S> state;
-    private final TransitionListener<S, T> listener;
+    private final TransitionListener<S, T> transitionListener;
 
-    public StateContainer(final S initial, final TransitionListener<S, T> listener) {
+    public StateContainer(final S initial, final TransitionListener<S, T> transitionListener) {
         state = new AtomicReference<>(initial);
-        this.listener = listener;
+        this.transitionListener = transitionListener;
     }
 
     public boolean apply(final T transition) {
-        while(true) {
+        while (true) {
             final S currentState = state.get();
-            final S nextState = transition.from(currentState);
+            final S nextState = transition.goFrom(currentState);
             if (nextState.equals(currentState)) {
                 return false;
             } else {
                 if (state.compareAndSet(currentState, nextState)) {
-                    listener.onTransition(transition, nextState);
+                    transitionListener.onTransition(transition, nextState);
                     return true;
                 }
             }

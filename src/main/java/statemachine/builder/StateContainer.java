@@ -8,13 +8,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class StateContainer<S, T extends Transition<S>> {
     private final AtomicReference<S> state;
-    private final Map<T, Runnable> onTransition;
+    private final Map<T, Runnable> transitionActions;
 
-    private StateContainer(final S initial, final Map<T, Runnable> onTransition) {
+    private StateContainer(final S initial, final Map<T, Runnable> transitionActions) {
         state = new AtomicReference<>(initial);
-        this.onTransition = onTransition;
+        this.transitionActions = transitionActions;
     }
 
+    @SuppressWarnings("UnusedParameters")
     public static <S, T extends Transition<S>> StartingBuilder<S, T> over(final Class<S> states, final Class<T> transitions) {
         return new StartingBuilder<>();
     }
@@ -22,12 +23,12 @@ public final class StateContainer<S, T extends Transition<S>> {
     public boolean apply(final T transition) {
         while (true) {
             final S currentState = state.get();
-            final S nextState = transition.whenFrom(currentState);
+            final S nextState = transition.goFrom(currentState);
             if (nextState.equals(currentState)) {
                 return false;
             } else {
                 if (state.compareAndSet(currentState, nextState)) {
-                    Optional.ofNullable(onTransition.get(transition)).ifPresent(Runnable::run);
+                    Optional.ofNullable(transitionActions.get(transition)).ifPresent(Runnable::run);
                     return true;
                 }
             }
@@ -57,7 +58,6 @@ public final class StateContainer<S, T extends Transition<S>> {
         }
 
         public class ActionBuilder {
-
             private final T t;
             public ActionBuilder(final T t) {
                 this.t = t;

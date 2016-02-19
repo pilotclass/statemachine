@@ -42,7 +42,7 @@ public class StateContainerTest {
         }
 
         @Override
-        public MyState whenFrom(final MyState currentState) {
+        public MyState goFrom(final MyState currentState) {
             return source.contains(currentState) ? target : currentState;
         }
     }

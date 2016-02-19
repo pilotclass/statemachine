@@ -1,5 +1,5 @@
 package statemachine.builder;
 
 public interface Transition<S> {
-    S whenFrom(S state);
+    S goFrom(S state);
 }
