@@ -1,4 +1,4 @@
-package statemachine.simple;
+package statemachine.listener;
 
 import org.junit.Assert;
 import org.junit.Before;

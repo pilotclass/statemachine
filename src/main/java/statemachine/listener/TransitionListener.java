@@ -1,4 +1,4 @@
-package statemachine.simple;
+package statemachine.listener;
 
 import statemachine.Transition;
 
